@@ -1,11 +1,7 @@
-import { RegistrationPage } from './../registration/registration.page';
 import {first} from 'rxjs/operators';
 import {AuthenticationService} from '../../service/authentication.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Routes, RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { NgModule, OnInit, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',

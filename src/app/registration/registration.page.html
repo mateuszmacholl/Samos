@@ -4,6 +4,32 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content padding>
+  <ion-content padding>
+    <form (ngSubmit)="register()" #registrationForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+              <ion-item>
+                <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="form.email" required></ion-input>
+              </ion-item>
 
-</ion-content>
+              <ion-item>
+                  <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="form.username" required></ion-input>
+                </ion-item>  
+
+              <ion-item>
+                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="form.password" required></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-button ion-button class="submit-btn" full type="submit" [disabled]="!registrationForm.form.valid">Create account</ion-button>
+        </ion-row>
+      </form>
+  
+      <ion-row>
+        <ion-button ion-button class="submit-btn" block clear (click)="login()">Back to login page</ion-button>
+      </ion-row>
+  </ion-content>
