@@ -6,6 +6,8 @@ import * as jwt_decode from 'jwt-decode';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
+  confirmAccountUrl: string = "http://samos.pl/confirm-account"
+
   constructor(private http: HttpClient) {
   }
 
@@ -27,5 +29,13 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('authorization');
+  }
+
+  register(email: string, username: string, password: string){
+    const url = this.confirmAccountUrl
+    return this.http.post<any>(`${environment.apiUrl}/users`, {email, username, password, url}, {observe: 'response'})
+    .pipe(map(res => {
+      return res.body
+    }));
   }
 }

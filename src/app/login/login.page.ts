@@ -1,13 +1,13 @@
 import {first} from 'rxjs/operators';
 import {AuthenticationService} from '../../service/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   returnUrl: string
   error: string
   form = { username: '', password: '' }
@@ -35,8 +35,14 @@ export class LoginPage {
         });
   }
 
-  register(){
+  goToRegistration(){
     this.router.navigateByUrl('/registration');
+    this.resetData()
   }
+
+  resetData(){
+    this.error = ''
+  }
+
 }
 
