@@ -1,3 +1,4 @@
+import { HomePostComponent } from './home-post/home-post.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -18,7 +19,9 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, HomePostComponent],
+  exports: [HomePostComponent]
+  
 })
 export class HomePageModule {
 }

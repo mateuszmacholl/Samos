@@ -1,9 +1,31 @@
-import { Component } from '@angular/core';
+import { first } from 'rxjs/operators';
+import { PostService } from './../../service/post.service';
+import { Component, OnInit } from "@angular/core";
+
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: "app-home",
+  templateUrl: "home.page.html",
+  styleUrls: ["home.page.scss"],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  posts: any[]
+
+  constructor(private postService: PostService) {
+
+  }
+
+  ngOnInit() {
+    this.getAllPosts()
+  }
+
+  getAllPosts(){
+    this.postService.getAll()
+    .pipe(first())
+    .subscribe(
+      data => {
+        this.posts = data
+      }
+    )
+  }
 }

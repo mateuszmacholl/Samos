@@ -9,4 +9,7 @@
 <ion-content padding>
   Home
   <ion-item [href]="'/login'">Login</ion-item>
+  <div *ngFor="let post of posts">
+      <app-home-post [post] = "post"></app-home-post>
+  </div>
 </ion-content>

@@ -6,7 +6,7 @@ import * as jwt_decode from 'jwt-decode';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  confirmAccountUrl: string = "http://samos.pl/confirm-account"
+  confirmAccountUrl: string = "http://samos.pl/confirm-account" // placeholder
 
   constructor(private http: HttpClient) {
   }
