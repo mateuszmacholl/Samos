@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Coords} from "../../model/coords";
+import {Calculator} from "@angular-devkit/build-angular/src/angular-cli-files/utilities/bundle-calculator";
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,6 @@ export class DistanceCalculatorService {
     }
 
     calcInMeters(coords1: Coords, coords2: Coords) {
-        console.log(coords1)
-        console.log(coords2)
         const R = 6371; // Radius of the earth in km
         const dLat = this.deg2rad(coords2.latitude-coords1.latitude);
         const dLon = this.deg2rad(coords2.longitude-coords1.longitude);

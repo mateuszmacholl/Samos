@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   }
 
   getAllPosts(){
-    this.postService.getAll()
+    this.postService.getNewest()
     .pipe(first())
     .subscribe(
       data => {

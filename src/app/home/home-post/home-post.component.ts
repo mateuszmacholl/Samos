@@ -5,6 +5,7 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {TimeConverterService} from "../../../service/time/timeConverter.service";
 import {DistanceCalculatorService} from "../../../service/distance/distanceCalculator.service";
 import {Coords} from "../../../model/coords";
+import {DistanceConverterService} from "../../../service/distance/distanceConverter.service";
 
 @Component({
     selector: 'app-home-post',
@@ -18,22 +19,23 @@ export class HomePostComponent implements OnInit {
 
     constructor(private postService: PostService,
                 private timeConverterService: TimeConverterService,
-                private distanceCalculatorService: DistanceCalculatorService,
-                public geoLocation: Geolocation) {
+                private distanceConverterService: DistanceConverterService) {
     }
 
     ngOnInit() {
         this.post.comments = 0
 
-        this.writtenTimeAgo = `${this.timeConverterService
-            .convertToPleasantForm(new Date(this.post.creationDate))} ago`
-
+        this.setWrittenTimeAgo()
         this.setDistance()
-
-        this.getNumberOfComments()
+        this.setComments()
     }
 
-    getNumberOfComments() {
+    setWrittenTimeAgo(){
+        this.writtenTimeAgo = this.timeConverterService
+            .convertToPleasantForm(new Date(this.post.creationDate))
+    }
+
+    setComments() {
         this.postService.getComments(this.post.id)
             .pipe(first())
             .subscribe(
@@ -43,29 +45,20 @@ export class HomePostComponent implements OnInit {
             )
     }
 
+    setDistance() {
+        const postLocation = this.getPostLocation()
+        this.distanceConverterService.convertToPleasantForm(postLocation).then(
+            (loc) => {
+                this.distance = loc.valueOf()
+            }
+        )
+    }
+
     getPostLocation(): Coords {
         if (this.post.coordinates == null) {
             return this.post.channel.coordinates
         } else {
             return this.post.coordinates
         }
-    }
-
-    setDistance(): Coords {
-        this.geoLocation.getCurrentPosition().then(
-            (res) => { // extract to separate class
-                const distanceInMeters = this.distanceCalculatorService.calcInMeters
-                (new Coords(res.coords.latitude, res.coords.longitude), this.getPostLocation())
-                if (distanceInMeters >= 1000) {
-                    this.distance = `${Math.round(distanceInMeters / 1000)} kilometers`
-                } else {
-                    this.distance = `${Math.round(distanceInMeters)} meters`
-                }
-            }).catch(
-            (error) => {
-                console.log('Error getting location', error)
-            }
-        )
-        return null
     }
 }

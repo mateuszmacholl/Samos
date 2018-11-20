@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      Samos home
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>
+            Samos home
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  Home
-  <ion-item [href]="'/login'">Login</ion-item>
-  <div *ngFor="let post of posts">
-      <app-home-post [post] = "post"></app-home-post>
-  </div>
+<ion-content>
+    <h1 padding>Newest posts</h1>
+    <div *ngFor="let post of posts">
+        <app-home-post [post]="post"></app-home-post>
+    </div>
 </ion-content>
+

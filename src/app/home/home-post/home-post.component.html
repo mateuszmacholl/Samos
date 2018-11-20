@@ -1,11 +1,31 @@
-<p>
-  author: {{post.author.username}}
-  <br>
-  date: {{writtenTimeAgo}}
-  <br>
-  distance {{distance}}
-  <br>
-  content: {{post.content}}
-  <br>
-  comments: {{post.comments.length}}
-</p>
+<ion-card>
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-avatar item-start>
+                    <img src="https://www.wykop.pl/cdn/c3201142/comment_MNWop4oGjtV0Ij9Xusz0ynoe5rKbiUXq,w400.jpg">
+                </ion-avatar>
+                <h2>{{post.author.username}}</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>{{writtenTimeAgo}}</p>
+            </ion-col>
+            <ion-col>
+                <p>{{distance}}</p>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+
+    <ion-card-content>
+        <p>{{post.content}}</p>
+    </ion-card-content>
+
+    <ion-row>
+        <ion-col>
+            {{this.post.comments.length}} comments
+        </ion-col>
+    </ion-row>
+
+</ion-card>

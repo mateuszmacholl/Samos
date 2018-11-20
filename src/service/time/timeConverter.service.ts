@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TimeCalculatorService} from "./timeCalculator.service";
 
 @Injectable({
@@ -13,20 +13,20 @@ export class TimeConverterService {
     convertToPleasantForm(date: Date): string {
         const timeInMilliseconds = this.timeCalculatorService.subtract(date, new Date())
         const timeInMinutes = this.timeCalculatorService.calculateToMinutes(timeInMilliseconds)
-        if(timeInMinutes >= 60){
+        if (timeInMinutes >= 60) {
             const timeInHours = this.timeCalculatorService.calculateToHours(timeInMilliseconds)
-            if(timeInHours >= 31){
-                if(timeInHours >= 24){
-                    const timeInDays = this.timeCalculatorService.calculateToDays(timeInMilliseconds)
-                    return `${timeInDays} days`
-                } else {
+            if (timeInHours >= 31) {
+                const timeInDays = this.timeCalculatorService.calculateToDays(timeInMilliseconds)
+                if (timeInDays >= 24) {
                     return date.toLocaleDateString()
+                } else {
+                    return `${timeInDays}d ago`
                 }
             } else {
-                return `${timeInHours} hours`
+                return `${timeInHours}h ago`
             }
         } else {
-            return `${timeInMinutes} minutes`;
+            return `${timeInMinutes}min ago`;
         }
     }
 }

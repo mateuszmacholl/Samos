@@ -9,8 +9,8 @@ export class PostService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(){
-    return this.http.get<any>(`${environment.apiUrl}/posts`, {observe: 'response'})
+  getNewest(){
+    return this.http.get<any>(`${environment.apiUrl}/posts?sort=creationDate,desc`, {observe: 'response'})
     .pipe(map(res => {
       return res.body.content
     }));
