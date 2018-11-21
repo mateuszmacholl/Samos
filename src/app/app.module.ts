@@ -25,7 +25,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {
 }

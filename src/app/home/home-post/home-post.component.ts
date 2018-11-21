@@ -1,9 +1,8 @@
 import {PostService} from '../../../service/post.service';
 import {first} from 'rxjs/operators';
 import {Component, OnInit, Input} from '@angular/core';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {Router} from '@angular/router';
 import {TimeConverterService} from "../../../service/time/timeConverter.service";
-import {DistanceCalculatorService} from "../../../service/distance/distanceCalculator.service";
 import {Coords} from "../../../model/coords";
 import {DistanceConverterService} from "../../../service/distance/distanceConverter.service";
 
@@ -13,13 +12,15 @@ import {DistanceConverterService} from "../../../service/distance/distanceConver
     styleUrls: ['./home-post.component.scss']
 })
 export class HomePostComponent implements OnInit {
-    @Input() post: any;
+    @Input() post: any
     writtenTimeAgo: string
     distance: string
 
-    constructor(private postService: PostService,
-                private timeConverterService: TimeConverterService,
-                private distanceConverterService: DistanceConverterService) {
+    constructor(
+        private router: Router,
+        private postService: PostService,
+        private timeConverterService: TimeConverterService,
+        private distanceConverterService: DistanceConverterService) {
     }
 
     ngOnInit() {
@@ -30,13 +31,13 @@ export class HomePostComponent implements OnInit {
         this.setComments()
     }
 
-    setWrittenTimeAgo(){
+    setWrittenTimeAgo() {
         this.writtenTimeAgo = this.timeConverterService
             .convertToPleasantForm(new Date(this.post.creationDate))
     }
 
     setComments() {
-        this.postService.getComments(this.post.id)
+        this.postService.getComment(this.post.id)
             .pipe(first())
             .subscribe(
                 data => {
@@ -46,7 +47,7 @@ export class HomePostComponent implements OnInit {
     }
 
     setDistance() {
-        const postLocation = this.getPostLocation()
+        const postLocation = this.postService.getPostLocation(this.post)
         this.distanceConverterService.convertToPleasantForm(postLocation).then(
             (loc) => {
                 this.distance = loc.valueOf()
@@ -54,11 +55,7 @@ export class HomePostComponent implements OnInit {
         )
     }
 
-    getPostLocation(): Coords {
-        if (this.post.coordinates == null) {
-            return this.post.channel.coordinates
-        } else {
-            return this.post.coordinates
-        }
+    showPost() {
+        this.router.navigate(['/post', this.post.id])
     }
 }
